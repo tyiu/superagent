@@ -1,4 +1,3 @@
-
 var request = require('../..')
   , express = require('express')
   , should = require("should")
@@ -44,11 +43,11 @@ describe('req.use(Function)', function(){
       .get('http://localhost:3045/')
       .use(function(req, next) {
         req.setHeader("x-test","This is a test");
-        next(null, function(res, resNext) {
+        next(null, function(res, prev) {
           res.on('data', function(data) {
             res.headers['x-test-inject'] = "This is a header";
           });
-          resNext();
+          prev();
         });
       })
       .end(function(err, res){
